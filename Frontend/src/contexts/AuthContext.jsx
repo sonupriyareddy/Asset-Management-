@@ -27,6 +27,7 @@ export function AuthProvider(props) {
   try {
     //loading
     toast.loading("logging in..",{id:"login",duration:1000})
+    //axios.post includes 3 parameters 1.url,2.data sent to backend,3.config(cookies)
      await axios.post(
       "http://localhost:8080/api/v1/auth/login",
       credentials,
