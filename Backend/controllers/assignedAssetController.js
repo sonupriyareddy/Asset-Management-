@@ -1,4 +1,5 @@
 import AssetItem from "../models/AssetItem.js";
+import assetModel from "../models/AssetModel.js";
 import AssignedAsset from "../models/AssignedAsset.js";
 import User from "../models/User.js";
 
@@ -80,9 +81,41 @@ export const addAssignedAsset = async (req, res) => {
 
 export const getAllAssignedAsset=async(req,res)=>{
     try {
-        const allAssignedAsset=await AssignedAsset.find().populate("assetItem")
-        return res.status(200).send({allAsset })
+        const allAssignedAsset=await AssignedAsset.find()
+        .populate("assetItem")
+        .populate("assignedTo")
+        .populate("assignedBy")
+        .populate({
+            path:"assetItem",
+            populate:{
+                path:"model",
+                model:"AssetModel" //your referenced collection name
+            }
+        })
+        return res.status(200).send({allAssignedAsset })
     } catch (error) {
         return res.status(500).send({ error: "something went wrong",message:error.message })
+    }
+}
+
+export const getMyAssignedAsset=async(req,res)=>{
+    try {
+        const id=req.user._id //auth user's id
+        console.log(id)
+        const myAssets=await AssignedAsset.find({assignedTo:id})
+        .populate("assetItem")
+        .populate("assignedBy")
+        .populate({
+            path:"assetItem",
+            populate:{
+                path:"model",
+                model:"AssetModel"
+            }
+        })
+        return res.status(200).send(myAssets)
+
+        
+    } catch (error) {
+        res.status(500).send({error:"Something went wrong",message:error.message})
     }
 }

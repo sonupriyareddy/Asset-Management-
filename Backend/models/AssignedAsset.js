@@ -1,8 +1,8 @@
 import {Schema,model} from "mongoose"
 const assignedAssetSchema=new Schema({
     assetItem:{type:Schema.Types.ObjectId,ref:"AssetItem",require:true},
-    assignedTo:{type:Schema.Types.ObjectId,ref:"User",require:true},
-     assignedBy:{type:Schema.Types.ObjectId,ref:"User",require:true},
+    assignedTo:{type:Schema.Types.ObjectId,ref:"users",require:true},
+     assignedBy:{type:Schema.Types.ObjectId,ref:"users",require:true},
     assignedDate:{type:Date,default:Date.now},
     returnDate:{type:Date},
     conditionOnReturn:{type:String,enum:["new","good","fair","poor"]},
