@@ -7,13 +7,14 @@ import cookieParser from "cookie-parser";
 import { assetModelRouter } from "./routes/assetModelRoutes.js";
 import createSuperAdmin from "./configs/createSuperAdmin.js";
 import { assetItemRouter } from "./routes/assetItemRoutes.js";
+import assignedAssetRouter from "./routes/assignedAssetRoutes.js"
 const app = express();
 
 //middleware
 app.use(express.json()); //json parser
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5174",
     credentials: true,
   })
 ); //cross origin allow
@@ -29,6 +30,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/asset-model", assetModelRouter);
 app.use("/api/v1/asset-item", assetItemRouter);
+app.use("/api/v1/assigned-asset",assignedAssetRouter)
 
 //db connection
 //dbConnect()
